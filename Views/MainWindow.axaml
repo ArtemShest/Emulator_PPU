@@ -1,0 +1,185 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Emulator_PPU.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+        x:Class="Emulator_PPU.Views.MainWindow"
+        Width="1600"  MinWidth="800"
+        Height="800" MinHeight="800"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Emulator_PPU">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="1, 170, 350, 0.3*, *" RowDefinitions="1, *">
+      <ListBox Grid.Column="1" Grid.Row="1" Items="{Binding recieveMsg}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding dateTime}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[0]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[1]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[2]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[3]}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+
+      <StackPanel Orientation="Vertical" Grid.Column="3" Grid.Row="1">
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="Общий статус" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.BLOCK_MASTER}" />
+            <TextBlock FontSize="10" Text="Канал ведущий" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.BLOCK_SLAVE}" />
+            <TextBlock FontSize="10" Text="Канал ведомый" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.CONNECTION_ESTABLISHED}" />
+            <TextBlock FontSize="10" Text="Связь между блоками установлена" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.BLOCK_CONFIGURED}" />
+            <TextBlock FontSize="10" Text="Блок сконфигурирован" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.BLOCK_POWER_ON}" />
+            <TextBlock FontSize="10" Text="Питание вкл" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.BLOCK_PULSES_ON}" />
+            <TextBlock FontSize="10" Text="Импульсы вкл" />
+          </StackPanel>  
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.USB_ESTABLISHED}" />
+            <TextBlock FontSize="10" Text="Юсб установлено" />
+          </StackPanel>    
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.FAILURE}" />
+            <TextBlock FontSize="10" Text="Сбой" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.EXTERNAL_BLOCKING}" />
+            <TextBlock FontSize="10" Text="Внешняя блокировка" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.POWER_SUPPLY_FAILURE}" />
+            <TextBlock FontSize="10" Text="Сбой источника питания" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.NETWORK_CONFIG_ERR}" />
+            <TextBlock FontSize="10" Text="Ошибка конфигурации сети" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.BLOCK_CONFIG_ERR}" />
+            <TextBlock FontSize="10" Text="Ошибка конфигурации блока" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.CHANNEL_CONFIG_ERR}" />
+            <TextBlock FontSize="10" Text="Ошибка конфигурации канала" />
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding ppu.OVERHEAT_DISCHARGE_CIRCUIT}" />
+            <TextBlock FontSize="10" Text="перегрев разрядной цепи" />
+          </StackPanel>
+
+        </StackPanel>
+          
+          <ItemsControl Grid.Column="4" Grid.Row="1" Items="{Binding ppu.channels}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Vertical">
+                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Канал " />
+                    <TextBlock  Text="{Binding index}" />
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding CHANNEL_ALLOWED}" />
+                    <TextBlock FontSize="10" Text="Канал разрешен" />
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding CHANNEL_CONFIGURED}" />
+                    <TextBlock FontSize="10" Text="Канал сконфигурирован" />
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding VOLT_REGULATOR_ON}" />
+                    <TextBlock FontSize="10" Text="Регулятор напряжения включен" />
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding PULSES_ON}" />
+                    <TextBlock FontSize="10" Text="Импульсы включены" />
+                  </StackPanel>
+                  
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding EXCEED_PULSE_CURRENT}" />
+                    <TextBlock FontSize="10" Text="Превышение импульсного тока" />
+                  </StackPanel>
+
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding EXCEED_VOLT_TRANSISTOR}" />
+                    <TextBlock FontSize="10" Text="Превышение напряжения на транзисторе" />
+                  </StackPanel>
+
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding TRANSISTOR_OVERHEAT}" />
+                    <TextBlock FontSize="10" Text="Перегрев транзистора" />
+                  </StackPanel>
+
+                  <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding CHANNEL_MISSED}" />
+                    <TextBlock FontSize="10" Text="Канал отсутствует" />
+                  </StackPanel>
+
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <UniformGrid Columns="3" Rows="2"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+          </ItemsControl>
+      
+      <ListBox Grid.Column="2" Grid.Row="1" Items="{Binding transmitMsg}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding dateTime}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[0]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[1]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[2]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[3]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[4]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[5]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[6]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[7]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[8]}" />
+              <TextBlock Text="  " />
+              <TextBlock Text="{Binding message[9]}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    
+    </Grid>
+</Window>
